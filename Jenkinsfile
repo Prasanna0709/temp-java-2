@@ -87,7 +87,7 @@ pipeline{
 		stage ('Executing the docker compose file'){
 			steps{ 
 				echo "Docker compose file executing stars ..."
-				sh "docker compose up"
+				sh "docker-compose up -d"
 				echo "Application started successfully !"
 			}
 		}
