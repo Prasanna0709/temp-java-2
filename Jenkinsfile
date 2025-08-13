@@ -55,7 +55,7 @@ pipeline{
 		stage ('Removing the Older Images'){
 			steps{
 				script{
-					def CURRENT_BUILD_NUMBER = env.BUILD_NUMBER.toInteger
+					def CURRENT_BUILD_NUMBER = env.BUILD_NUMBER.toInteger()
 					def SECOND_OLDER_BUILD_NUMBER = CURRENT_BUILD_NUMBER-2
 
 					if(SECOND_OLDER_BUILD_NUMBER > 0){
