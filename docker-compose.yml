@@ -1,0 +1,38 @@
+services:
+ java-be:
+  image: prasanna0218/my-be-app:${BUILD_NUMBER}
+  container_name: my-be-container
+  ports:
+   - "8081:8081"
+  restart: always
+  networks:
+   - my-network-1
+
+ prometheus:
+  image: prom/prometheus:v3.5.0
+  container_name: prometheus
+  ports:
+   - "9000:9000"
+  volumes:
+   - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  restart: always
+  networks:
+   - my-network-1
+
+ grafana:
+  image: grafana/grafana:latest
+  container_name: grafana
+  ports:
+   - "3000:3000"
+  restart: always
+  volumes:
+   - grafana-storage:/var/lib/grafana
+  networks:
+   - my-network-1
+
+volumes:
+ grafana-storage:
+
+networks:
+ my-network-1:
+  driver: bridge
