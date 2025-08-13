@@ -84,10 +84,19 @@ pipeline{
 			}
 		}
 
+		stage ('Running the Prometheus and grafana for first time'){
+			steps{
+				sh '''
+					docker ps | grep prometheus || docker compose up -d prometheus
+					docker ps | grep grafana || docker compose up -d grafana
+				'''
+			}
+		}
+
 		stage ('Executing the docker compose file'){
 			steps{ 
 				echo "Docker compose file executing stars ..."
-				sh "docker compose up -d"
+				sh "docker compose up -d java-be"
 				echo "Application started successfully !"
 			}
 		}
