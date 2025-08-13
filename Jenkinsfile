@@ -87,8 +87,17 @@ pipeline{
 		stage ('Running the Prometheus and grafana for first time'){
 			steps{
 				sh '''
-					docker ps | grep prometheus || docker compose up -d prometheus
-					docker ps | grep grafana || docker compose up -d grafana
+					if [ $(docker ps -q -f name=prometheus | wc -l) -eq 0 ]; then
+						docker compose up -d prometheus
+					else
+						echo "Prometheus container already exists"
+					fi
+
+					if [ $(docker ps -q -f name=grafana | wc -l) -eq 0 ]; then
+						docker compose up -d grafana
+					else
+						echo "Grafana container already exists"
+					fi
 				'''
 			}
 		}
