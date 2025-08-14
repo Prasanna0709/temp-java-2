@@ -84,6 +84,18 @@ pipeline{
 			}
 		}
 
+		stage ('Checking the Exited container'){
+			steps{
+				sh '''
+					if [ $(docker ps -a -f status=exited -f name=prometheus | wc -l) -gt 1 ]; then 
+						docker rm prometheus
+					else
+						echo "No exited containers for Prometheus"
+					fi
+				'''
+			}
+		}
+
 		stage ('Running the Prometheus and grafana for first time'){
 			steps{
 				sh '''
